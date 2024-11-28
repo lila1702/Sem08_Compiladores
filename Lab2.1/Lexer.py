@@ -49,3 +49,31 @@ class Lexer:
             return Token(Consts.INT, int(strNum))
         return Token(Consts.FLOAT, float(strNum))
 
+    def __makeId(self):
+        lexema = ""
+        while (self.current != None and self.current in Consts.LETRAS_DIGITOS + Consts.UNDER):
+            lexema += self.current
+            self.__advance()
+        tokType = Consts.KEY if lexema in Consts.KEYS else Consts.ID
+        return Token(tokType, lexema)
+
+    def MakeString(self):
+        stri = ""
+        lookahead = False
+        self.__advance()
+        specialChars = {'n' : '\n', 't' : '\t'}
+
+        while (self.current != None and (self.current != '"' or lookahead)):
+            if (lookahead):
+                c = self.current
+                stri = stri + c
+                lookahead = False
+            else:
+                if (self.current == '\\'):
+                    lookahead = True
+                else:
+                    stri = stri + self.current
+            
+            self.__advance()
+        self.__advance()
+        return Token(Consts.STRING, stri)
