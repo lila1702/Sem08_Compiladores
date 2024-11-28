@@ -29,6 +29,10 @@ class Lexer:
                 self.__advance()
             elif self.current in Consts.DIGITOS:
                 tokens.append(self.__makeNumber())
+            elif self.current in Consts.LETRAS + Consts.UNDER:
+                tokens.append(self.__makeId())
+            elif(self.current == '""'):
+                tokens.append(self.MakeString())
             else:
                 return tokens, Error(Error.lexerError)
             
@@ -66,7 +70,7 @@ class Lexer:
         while (self.current != None and (self.current != '"' or lookahead)):
             if (lookahead):
                 c = self.current
-                stri = stri + c
+                stri = stri + self.current
                 lookahead = False
             else:
                 if (self.current == '\\'):

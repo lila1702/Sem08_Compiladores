@@ -10,6 +10,8 @@ class Repl(Cmd):
     def help_exit(self):
         print('Digite\n :q para sair\n :s para um exemplo!')
         return False
+    def do_s(self):
+        pass
     def emptyline(self): # Disabilita repeticao do ultimo comando
         pass
     
